@@ -1,14 +1,14 @@
 # TABLE: #
-# +----------+-------+---------+
-# | movie	 | actor | casting |
-# +----------+-------+---------+
-# | id	 | id	   | movieid |
-# | title    | name  | actorid |
-# | yr	 | ord   |         |
-# | director |	   |         |
-# | budget	 |	   |         |
-# | gross	 |       |         |
-# +----------+-------+---------+
+# +----------+-----------------+
+# | movie    | actor | casting | 
+# +----------+-----------------+
+# | id       | id    | movieid | 
+# | title    | name  | actorid | 
+# | yr       | ord   |         |
+# | director |       |         |
+# | budget   |       |         |
+# | gross    |       |         |
+# +----------+-----------------+
 
 -- # 1. List the films where the yr is 1962 [Show id, title]
 SELECT id, title
