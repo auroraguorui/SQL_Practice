@@ -1,11 +1,10 @@
 # TABLE1: game #
 # +------+--------------+---------------------------+-------+-------+
-# | id   |	mdate	   | stadium	                 | team1 | team2 |
+# | id   | mdate        |    stadium                | team1 | team2 |
 # +------+--------------+---------------------------+-------+-------+
 # | 1001 |  8 June 2012 | National Stadium, Warsaw  | POL   | GRE   |
 # | 1002 |  8 June 2012 | Stadion Miejski (Wroclaw) | RUS   | CZE   |
 # | 1003 | 12 June 2012 | Stadion Miejski (Wroclaw) | GRE   | CZE   |
-# | 1004 | 12 June 2012 | National Stadium, Warsaw | POL    | RUS   |
 # +------+--------------+---------------------------+-------+-------+
 
 # TABLE2: goal #
