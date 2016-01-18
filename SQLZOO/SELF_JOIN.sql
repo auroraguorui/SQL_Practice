@@ -1,11 +1,11 @@
 # TABLE: #
 # +-------+---------+
-# | stops	| route   |
+# | stops | ruote   | 
 # +-------+---------+
-# | id    |	num     |
-# | name  | company |
-# | pos   |         |
-# | stop  |         |
+# | id    | num     | 
+# | name  | company |  
+# | pos   | ord     |  
+# | stop  |         |     
 # +-------+---------+
 
 -- # 1. How many stops are in the database.
