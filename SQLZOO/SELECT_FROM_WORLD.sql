@@ -1,4 +1,3 @@
-
 # TABLE:  WORLD #
 # +-------------+------------+---------+------------+--------------+
 # | name        | continent  |    area | population | gdp          |
@@ -41,30 +40,35 @@ WHERE name LIKE 'United%';
 
 -- # 7. Two ways to be big: A country is big if it has an area of more than 3 million sq km or it has a population 
 --      of more than 250 million. Show the countries that are big by area or big by population. Show name, population and area.
-SELECT name, population , area FROM world
+SELECT name, population , area 
+FROM world
 WHERE area > 3000000 OR population > 250000000 
 
 -- # 8. USA, India, and China are big in population and big by area. Exclude these countries. Show the countries that 
 --      are big by area or big by population but not both. Show name, population and area.
-SELECT name, population, area FROM world
+SELECT name, population, area 
+FROM world
 WHERE (population > 250000000) XOR (area > 3000000);
 
 -- # 9. Show the name and population in millions and the GDP in billions for the countries of the continent 'South America'. 
 --      Use the ROUND function to show the values to two decimal places. For South America show population in millions and 
 --      GDP in billions to 2 decimal places.
-SELECT name, round(population/1000000, 2), round(gdp/1000000000,2) FROM world
+SELECT name, round(population/1000000, 2), round(gdp/1000000000,2) 
+FROM world
 WHERE continent = 'South America'
 
 -- # 10. Show the per-capita GDP for those countries with a GDP of at least one trillion (1000000000000; that is 12 zeros). 
 --       Round this value to the nearest 1000. Show per-capita GDP for the trillion dollar countries to the nearest $1000.
-SELECT name, round(gdp/population, -3) FROM world WHERE gdp > 1000000000000
+SELECT name, round(gdp/population, -3) 
+FROM world 
+WHERE gdp > 1000000000000
 
 -- # 11. Show the name - but substitute Australasia for Oceania - for countries beginning with N.
 SELECT name,
 CASE WHEN continent='Oceania' THEN 'Australasia'
      ELSE continent END
-  FROM world
- WHERE name LIKE 'N%'
+FROM world
+WHERE name LIKE 'N%'
  
 -- # 12. Show the name and the continent - but substitute Eurasia for Europe and Asia; substitute America - for each country 
 --       in North America or South America or Caribbean. Show countries beginning with A or B
