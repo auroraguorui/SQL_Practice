@@ -45,8 +45,7 @@ AND population < (
   FROM world
   WHERE name = 'Poland');
 
--- # 5. Which countries have a GDP greater than any country in Europe?
--- # [Give the name only.]
+-- # 5. Which countries have a GDP greater than any country in Europe? [Give the name only.]
 SELECT name
 FROM world
 WHERE gdp > (
@@ -63,9 +62,7 @@ WHERE x.area = (
   FROM world AS y
   WHERE x.continent = y.continent)
 
--- # 7. Find each country that belongs to a continent where all
--- # populations are less than 25000000. Show name, continent and
--- # population.
+-- # 7. Find each country that belongs to a continent where all populations are less than 25000000. Show name, continent and population.
 SELECT x.name, x.continent, x.population
 FROM world AS x
 WHERE 25000000 > ALL (
@@ -73,9 +70,7 @@ WHERE 25000000 > ALL (
   FROM world AS y
   WHERE x.continent = y.continent);
 
--- # 8. Some countries have populations more than three times that of
--- # any of their neighbours (in the same continent). Give the
--- # countries and continents.
+-- # 8. Some countries have populations more than three times that of any of their neighbours (in the same continent). Give the countries and continents.
 SELECT x.name, x.continent
 FROM world AS x
 WHERE x.population/3 > ALL (
@@ -83,3 +78,18 @@ WHERE x.population/3 > ALL (
   FROM world AS y
   WHERE x.continent = y.continent
   AND x.name != y.name);
+  
+-- # 9. Find the continents where all countries have a population <= 25000000. Then find the names of the countries associated with these continents. 
+--      Show name, continent and population.
+SELECT name, continent, population 
+FROM world x
+WHERE 25000000 >= all(
+  SELECT population 
+  FROM world y 
+  WHERE x.continent = y.continent);
+  
+-- # 10. Some countries have populations more than three times that of any of their neighbours (in the same continent). Give the countries and continents.
+SELECT name, continent 
+FROM world x
+WHERE population > all(
+  SELECT 3*population FROM world y WHERE x.continent = y.continent AND x.name != y.name)
