@@ -1,19 +1,19 @@
 # TABLE1: game #
 # +------+--------------+---------------------------+-------+-------+
-# | id   |	mdate	      | stadium	                  | team1 |	team2 |
+# | id   |	mdate	   | stadium	                 | team1 | team2 |
 # +------+--------------+---------------------------+-------+-------+
-# | 1001 |  8 June 2012	| National Stadium, Warsaw  | POL	  | GRE   |
-# | 1002 |  8 June 2012	| Stadion Miejski (Wroclaw) | RUS	  | CZE   |
-# | 1003 | 12 June 2012	| Stadion Miejski (Wroclaw) | GRE   |	CZE   |
-# | 1004 | 12 June 2012	| National Stadium, Warsaw	| POL	  | RUS   |
+# | 1001 |  8 June 2012 | National Stadium, Warsaw  | POL   | GRE   |
+# | 1002 |  8 June 2012 | Stadion Miejski (Wroclaw) | RUS   | CZE   |
+# | 1003 | 12 June 2012 | Stadion Miejski (Wroclaw) | GRE   | CZE   |
+# | 1004 | 12 June 2012 | National Stadium, Warsaw | POL    | RUS   |
 # +------+--------------+---------------------------+-------+-------+
 
 # TABLE2: goal #
 # +---------+--------+----------------------+-------+
-# | matchid | teamid | player	              | gtime |
+# | matchid | teamid | player	         | gtime |
 # +---------+--------+----------------------+-------+
-# | 1001	  | POL	   | Robert Lewandowski	  | 17    |
-# | 1001	  | GRE	   | Dimitris Salpingidis |	51    |
+# | 1001    | POL	   | Robert Lewandowski	  | 17    |
+# | 1001    | GRE	   | Dimitris Salpingidis |	51    |
 # | 1002	  | RUS	   | Alan Dzagoev	        | 15    |
 # +---------+--------+----------------------+-------+
 
