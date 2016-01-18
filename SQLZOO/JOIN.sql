@@ -9,21 +9,20 @@
 
 # TABLE2: goal #
 # +---------+--------+----------------------+-------+
-# | matchid | teamid | player	         | gtime |
+# | matchid | teamid |    player            | gtime |
 # +---------+--------+----------------------+-------+
-# | 1001    | POL	   | Robert Lewandowski	  | 17    |
-# | 1001    | GRE	   | Dimitris Salpingidis |	51    |
-# | 1002	  | RUS	   | Alan Dzagoev	        | 15    |
+# | 1001    | POL    | Robert Lewandowski   | 17    | 
+# | 1002    | GRE    | Dimitris Salpingidis | 51    | 
+# | 1003    | RUS    | Alan Dzagoev         | 15    | 
 # +---------+--------+----------------------+-------+
 
 # TABLE3: eteam #
 # +-----+----------------+------------------+
-# | id  |	teamname       | coach            |
+# | id  | teamname       |    coach         | 
 # +-----+----------------+------------------+
-# | POL	| Poland	       | Franciszek Smuda |
-# | RUS	| Russia	       | Dick Advocaat    |
-# | CZE	| Czech Republic | Michal Bilek     |
-# | GRE	| Greece	       | Fernando Santos  |
+# | POL | Poland         | Franciszek Smuda | 
+# | RUS | Russia         | Dick Advocaat    | 
+# | CZE | Czech Republic | Michal Bilek     |
 # +-----+----------------+------------------+
 
 -- # 1. Show matchid and player name for all goals scored by Germany. teamid = 'GER'.
