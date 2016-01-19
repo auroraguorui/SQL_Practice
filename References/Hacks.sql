@@ -335,4 +335,105 @@ CREATE VIEW mimic AS
   LEFT OUTER JOIN employeeCopy ON (employeeParking.id = employeeCopy.id);
 SELECT * FROM mimic;
 
--- # 14. 
+-- # 14. Issue queries without using a table. This is done in different ways across different platforms but all of them will give a single
+--       row of information. Only certain functions can be used without a table and these functions are called static functions. Static
+--       functions can allow a user to obtain the current username, current date, current timestamp and also the version of the database
+--       being used.
+SELECT CURRENT_USER, CURRENT_DATE, CURRENT_TIMESTAMP, VERSION(), RAND(), UUID()
+
+-- # 15. Generate rows without the use of tables. You can use single value SELECT to generate tables. You can use them when you need a 
+--       small table for your query but you don't have permission to create tables in the database itself.
+SELECT x centigrade, x*9/5+32 fahrenheit
+FROM (
+  SELECT 0 x 
+  UNION 
+  SELECT 10 
+  UNION 
+  SELECT 20
+  UNION 
+  SELECT 30 
+  UNION 
+  SELECT 40) t
+
+-- # 16. Combine multiple queries. Both related and unrelated queries can be merged, if the queries are often used together then combining
+--       them together can greatly improve performance. Table 1 and 2 show the two separate tables and Table 3 shows the result you would 
+--       obtain from combining queries.
+# Table 1 #
+# +---------+---------------+
+# | content	| Page name     |
+# +---------+---------------+
+# | chello	 | index.html    |
+# | cHia	   | index.html    |
+# | cpage2	 | p2.html       |
+# | cIndex	 | contents.html |
+# +---------+---------------+
+
+# Table 2 #
+# +----------------------------------+
+# | Message                          |
+# +----------------------------------+
+# | The site will be down on Tuesday |
+# +----------------------------------+
+
+# Table 3 #
+# +------------+---------+-----------------------------------+------+
+# | pagename	  | content	| NULL                             	| page |
+# +------------+---------+-----------------------------------+------+
+# | index.html	| hello		 |                                   | page |
+# | index.html	| Hia		   |                                   | page |
+# |            |         | The site will be down on Tuesday	 | motd |
+# +------------+---------+-----------------------------------+------+
+--       In this example a typical approach to these tables could be:
+-- SELECT pagename, content
+--  FROM page
+-- WHERE pagename = 'index.html'
+--      or:
+-- SELECT message FROM motd
+--       These two queries can be combined using UNION and NULLs where necessary and therefore a single query can be run allowing a quicker response from the database.
+SELECT pagename, content, NULL, 'page' FROM page WHERE pagename = 'index.html'
+UNION 
+SELECT NULL, NULL, message, 'motd' FROM motd
+
+-- # 17. Here you are shown how to break your query down by range. In this example if you want to see how much different age groups spend
+--       then you will have to group the individuals in specific ranges. First you use ROUND to group together the different age groups.
+--       You then use the AVG function to find the average they spend. Finally you use a CONCAT function to make the age ranges more clear.
+SELECT CONCAT(low-5,'-' ,low+4) AS the_range, avgSpend
+FROM (
+  SELECT ROUND(age,-1) AS low, AVG(spend) AS avgSpend
+  FROM population
+  GROUP BY ROUND(age,-1)) t
+--       You can also use the FLOOR function:
+SELECT age, 5*FLOOR(age/5) AS valueBucket,
+       CONCAT(5*FLOOR(age/5),'-',5*FLOOR(age/5)+4) AS the_range
+FROM population 
+
+-- # 18. Test subquery. Here you are shown how to test two values from your subquery to ensure that it has run correctly.
+# Table 1 #
+# +----------+--------+-------+
+# | Customer	| Item	  | Price |
+# +----------+--------+-------+
+# | Brian	   | Table	 | 100   |
+# | Robert	  | Chair	 | 20    |
+# | Robert	  | Carpet | 200   |
+# | Janette	 | Statue | 300   |
+# +----------+--------+-------+
+
+# Table 2 #
+# +----------+--------+-------+
+# | Customer	| Item	  | Price |
+# +----------+--------+-------+
+# | Brian    |	Table	 | 100   |
+# | Robert	  | Carpet	| 200   |
+# | Janette	 | Statue	| 300   |
+# +----------+--------+-------+
+--       Suppose you have a table of customers and their orders, as shown in Table 1 and you want to produce a list of every customer and 
+--       their biggest order, as shown in Table 2. This is easy enough to do with:
+-- SELECT Customer, MAX(price)
+-- FROM custItem
+-- GROUP BY Customer
+SELECT x.Customer, x.Item, x.Price
+FROM custItem x JOIN (
+  SELECT Customer, MAX(price) AS Price
+  FROM custItem
+  GROUP BY Customer) y
+  ON (x.Customer = y.Customer AND x.Price = y.Price)
