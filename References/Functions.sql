@@ -1,4 +1,4 @@
-http://sqlzoo.net/wiki/Functions_Reference 
+-- # http://sqlzoo.net/wiki/Functions_Reference 
 
 -- # 1. Concatenate strings.
 --      Concatenation means "stick strings together". In this example we concatenate three strings, name and region are string 
@@ -214,3 +214,85 @@ FROM bbc
 --       DATE '2006-05-20' + 7  -> DATE '2006-05-27'
 SELECT whn, whn+7 
 FROM eclipse
+
+-- # 33. + INTERVAL. d + INTERVAL i DAY returns the date i days after the date d. 
+--       You can also add YEAR, MONTH, DAY, HOUR, MINUTE, SECOND. You can also add a negative value.
+--       DATE '2006-05-20' + INTERVAL 5 DAY   -> DATE '2006-05-25' 
+--       DATE '2006-05-20' + INTERVAL 5 MONTH -> DATE '2006-10-20' 
+--       DATE '2006-05-20' + INTERVAL 5 YEAR  -> DATE '2011-05-20' 
+SELECT whn, whn + INTERVAL 7 DAY
+FROM eclipse
+
+-- # 34. + (strings). + allows you to stick two or more strings together. This operation is concatenation.
+SELECT CONCAT(region,name)
+FROM bbc  
+
+-- # 35. POSITION(s1 IN s2) returns the character position of the substring s1 within the larger string s2. The first character is in position 1. If s1 does not occur in s2 it returns 0.
+--       POSITION('ll' IN 'Hello world') -> 3 
+SELECT name, POSITION('an' IN name)
+FROM bbc
+
+-- # 36. QUARTER allows you to retrieve the 3 month period from a date. 
+SELECT wk, QUARTER(wk) AS Quarter, song
+FROM totp
+WHERE singer = 'Cliff Richard'
+ORDER BY wk DESC
+
+-- # 37. RANK() OVER (ORDER BY f DESC) returns the rank position relative to the expression f.
+SELECT name, 
+RANK() OVER (ORDER BY population DESC)
+FROM world
+WHERE population > 180000000
+-- note: only sqlserver and oracle has this function
+
+-- # 38. RIGHT(s,n) allows you to extract n characters from the end of the string s.
+--       RIGHT('Hello world', 4) -> 'orld'      
+SELECT name, RIGHT(name, 3)
+FROM bbc
+
+-- # 39. SECOND allows you to retrieve the second from a date.
+SELECT SECOND(whn) AS v, whn, wht
+FROM eclipse
+
+-- # 40. SIN(f) returns the sine of f where f is in radians.
+SELECT id, angle, SIN(angle)
+FROM angle
+
+-- # 41. SUBSTR allows you to extract part of a string. SUBSTRING the same
+--       SUBSTR('Hello world', 2, 3) -> 'ell'    
+SELECT name,
+  SUBSTR(name, 2, 5)
+FROM bbc
+
+-- # 42. SUBSTRING allows you to extract part of a string.
+--       SUBSTRING('Hello world' FROM 2 FOR 3) -> 'ell'    
+SELECT name,
+  SUBSTRING(name FROM 2 FOR 5)
+FROM bbc
+
+-- # 43. TAN(f) returns the tangent of f where f is in radians.
+SELECT id, angle, TAN(angle)
+FROM angle
+
+-- # 44. TO_CHAR allows you to convert a date to a string using a variety of formats.
+--       TO_CHAR(d, 'YYYY') -> Four digit year
+--       TO_CHAR(d, 'MM')   -> Two digit month
+--       TO_CHAR(d, 'DD')   -> Two digit day
+--       TO_CHAR(d, 'HH24') -> Two digit hour
+--       TO_CHAR(d, 'MI')   -> Two digit minutes
+--       TO_CHAR(d, 'MON')  -> Three character month
+SELECT EXTRACT(YEAR FROM whn) AS v, whn, wht
+FROM eclipse
+
+-- # 45. TRIM(s) returns the string with leading and trailing spaces removed.
+--       TRIM('Hello world  ') -> 'Hello world'. This function is particularly useful when working with CHAR fields. Typically a CHAR field is paddded with spaces. In contrast a VARCHAR field does not require padding.
+SELECT name, TRIM(name)
+FROM bbc
+
+-- # 46. YEAR allows you to retrieve the year from a date.
+SELECT YEAR(whn) AS v, whn, wht
+FROM eclipse
+
+
+
+
