@@ -1,0 +1,14 @@
+# The SQL standard permits three types. DATE, TIME and TIMESTAMP. A TIMESTAMP includes a date and a time. 
+# Several engines use the word TIMESTAMP for a different purpose.
+
+CREATE TABLE t_dttest(
+  a DATE,
+  b TIME,
+  c DATETIME);
+
+INSERT INTO t_dttest VALUES (
+  DATE '1962-05-20',
+  TIME '10:32:16',
+  TIMESTAMP '1962-05-20 10:32:16');
+
+SELECT * FROM t_dttest;
