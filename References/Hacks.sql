@@ -148,26 +148,13 @@ FROM t
 # +------+--------------+-------+       +------+--------------+-------+
 # | Awl	 | 1            | 10    |       | Awl	 | 1            | 10    |
 # | Awl	 | 3            | 10    |       | Awl	 | 3            | 10    |
-# | Bowl	| 2	           |	10    |
-# | Bowl	| 5	           |	10    |
-# | Bowl	| 6	           |	10    |
-# | Cowl	| 4	           |	10    |
-# +------+--------------+-------+
+# | Bowl | 2            | 10    |       | Awl  |              | 20    |
+# | Bowl | 5            | 10    |       | Bowl | 2            | 10    |
+# | Bowl | 6            | 10    |       | Bowl | 5            | 10    | 
+  +------+--------------+-------+       | Bowl | 6            | 10    |
+                                        | Bowl |              | 30    |
+                                        +------+--------------+-------+
 
-# Table 2 #
-# +------+--------------+-------+
-# | item	| serialnumber	| price |
-# +------+--------------+-------+
-# | Awl	 | 	 1          | 	10   |
-# | Awl 	| 	 3          |	 10   |
-# | Awl 	| 	            |  20   |
-# | Bowl	| 	 2	         |  10   |
-# | Bowl	| 	 5          | 	10   |
-# | Bowl	| 	 6          | 	10   |
-# | Bowl	| 	            |  30   |
-# | Cowl	| 	 4          |	 10   |
-# | Cowl	| 	            |  10   |
-# +------+--------------+-------+
 --       In this example a UNION is used to make the query show the subtotal results along with the price results and to 
 --       ensure the subtotals come after the price a COALESCE function is also used.
 SELECT item, serialnumber, price 
