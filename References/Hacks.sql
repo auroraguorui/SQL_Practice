@@ -118,9 +118,9 @@ FROM transact
 --      obtain with the LEFT JOIN
 # Table 1 #                          # Table 2 #
 # +---------+---------------+        +---------+---------------+
-# | name	   | COUNT(custid) |        | name	   | COUNT(custid) |
+# | name    | COUNT(custid) |        | name	   | COUNT(custid) |
 # +---------+---------------+        +---------+---------------+
-# | Betty  	| 2             |        | Betty	  | 2             |
+# | Betty   | 2             |        | Betty	  | 2             |
 # | Janette	| 1             |        | Janette	| 1             | 
 # +---------+---------------+        | Robert	 | 0             |
                                      +---------+---------------+
