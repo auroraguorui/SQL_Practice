@@ -40,3 +40,12 @@ FROM (SELECT Department.Id AS DepartmentId, Department.Name AS Department, emp.S
 SELECT Department.Name AS Department, Employee.Name AS Employee, Employee.Salary AS Salary
 FROM Department JOIN Employee ON Employee.DepartmentId = Department.Id
 WHERE Employee.Salary IN (SELECT MAX(e.Salary) FROM Employee e WHERE e.DepartmentId = Employee.DepartmentId)
+
+# Write your MySQL query statement below
+SELECT d.name Department, e.Name Employee, e.Salary
+FROM Employee e
+JOIN Department d ON e.DepartmentId = d.Id
+WHERE e.Salary >= ALL (
+  SELECT e2.Salary 
+  FROM Employee e2 
+  WHERE e.DepartmentId = e2.DepartmentId)
