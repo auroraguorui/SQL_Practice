@@ -95,17 +95,14 @@ FROM transact;
 -- # 7. Credit debit. In this example you are shown how to split a single column into two separate columns and also below you are
 --      told how to combine two tables into a single table. Here we are splitting cash amounts into credit and debit.
 --      Table 1 shows the results without the split column and Table 2 shows what we get when the column is split into two.
-# Table 1 #                                           # Table 2 #
-# +------------+---------------+--------+             +------------+---------------+--------+---------+
-# | whn       	| description	  | amount |             | whn	       | description	  | cshIN 	| cshOUT  |
-# +------------+---------------+--------+             +------------+---------------+--------+---------+
-# | 2006-11-01	| Wages	        |  50    |             | 2006-11-01	| Wages	        |  50    |	        |
-# | 2006-11-02	| Company Store	| -10    |             | 2006-11-02	| Company Store	|        |	10      |
-# | 2006-11-03 |	Company Store	| -10    |             | 2006-11-03	| Company Store	|    	   | 10      |
-# | 2006-11-04	| Company Store	| -10    |             | 2006-11-04	| Company Store	|    	   | 10      |
-# | 2006-11-05	| Company Store	| -10    |             | 2006-11-05	| Company Store	|    	   | 10      |
-# | 2006-11-06	| Company Store	| -10    |             | 2006-11-06	| Company Store	|    	   | 10      |
-# +------------+---------------+--------+             +------------+---------------+--------+---------+
+# Table 1 #                                    # Table 2 #
+# +------------+---------------+--------+      +------------+---------------+--------+---------+
+# | whn        | description   | amount |      | whn        | description   | cshIN  | cshOUT |
+# +------------+---------------+--------+      +------------+---------------+--------+---------+
+# | 2006-11-01 | Wages         |  50    |      | 2006-11-01 | Wages         |  50    |         |
+# | 2006-11-02 | Company Store | -10    |      | 2006-11-02 | Wages         |        | 10      |
+# | 2006-11-03 | Company Store | -10    |      | 2006-11-03 | Company Store |        | 10      |
+# +------------+---------------+--------+      +------------+---------------+--------+---------+
 
 --      To split a column into two you have to use a CASE function as shown in the example. The SUBSTRING used in the example is 
 --      used to get rid of the negative sign infront of the number so that there are only positive numbers in the table.
