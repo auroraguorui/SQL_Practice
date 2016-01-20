@@ -146,8 +146,8 @@ FROM t
 # +------+--------------+-------+       +------+--------------+-------+
 # | item | serialnumber | price |       | item | serialnumber | price |
 # +------+--------------+-------+       +------+--------------+-------+
-# | Awl	 | 1            | 10    |       | Awl	 | 1            | 10    |
-# | Awl	 | 3            | 10    |       | Awl	 | 3            | 10    |
+# | Awl	 | 1            | 10    |       | Awl  | 1            | 10    | 
+# | Awl	 | 3            | 10    |       | Awl  | 3            | 10    | 
 # | Bowl | 2            | 10    |       | Awl  |              | 20    |
 # | Bowl | 5            | 10    |       | Bowl | 2            | 10    |
 # | Bowl | 6            | 10    |       | Bowl | 5            | 10    | 
@@ -173,31 +173,24 @@ GROUP BY item, serialnumber WITH ROLLUP
 -- # 11. Combine tables containing different data. In this example you are shown how to take tables with different data and
 --       put them into a single table that is more understandable allowing all the information from two or more tables to be 
 --       seen. Table 1 and table 2 show the two tables you want to combine and table 3 is the table they are combined into.
-# Table 1 #
+# Table 1 #                                                   # Table 2 #
+# +---------+--------------+---------------+--------+         +------+--------+---------+-----+
+# | staffid | email        | name          | salary |         | id   | fname  | lname   | gpa |
+# +---------+--------------+---------------+--------+         | 1007 | Peter  | Perfect | 590 | 
+# | 0173    | stan@bos.edu | Stern, Stan   | 99000  |         | 1008 | Donald | Dunce   | 220 | 
+# | 0101    | ali@bos.edu  | Aloof, Alison | 300000 |         +------+--------+---------+-----+
 # +---------+--------------+---------------+--------+
-# | staffid	| email       	| name	         | salary |
-# +---------+--------------+---------------+--------+
-# | 0173    |	stan@bos.edu	| Stern, Stan  	| 99000  |
-# | 0101	   | ali@bos.edu	 | Aloof, Alison	| 30000  |
-# +---------+--------------+---------------+--------+
-
-# Table 2 #
-# +------+--------+---------+-----+
-# | id	  | fname	 | lname	  | gpa |
-# +------+--------+---------+-----+
-# | 1007	| Peter	 | Perfect	| 590 |
-# | 1008	| Donald	| Dunce	  | 220 |
-# +------+--------+---------+-----+
 
 # Table 3 #
-# +-------+---------------+--------------+-------+---------+
-# | id    |	name	         | email	salary	| gpa	  | species |
-# +-------+---------------+--------------+-------+---------+
-# | F173	 | Stern,Stan	   | stan@bos.edu	| 99000	|	Staff   |
-# | F101	 | Aloof,Alison	 | ali@bos.edu	 | 30000	|	Staff   |
-# | S1007	| Perfect,Peter	| 1007@bos.edu	|	590	  | Student |
-# | S1008	| Dunce,Donald	 | 1008@bos.edu	|	220	  | Student |
-# +-------+---------------+--------------+-------+---------+
+# +-------+---------------+--------------+--------+------+---------+
+# | id    | name          | email        | salary | gpa  | species | 
+# +-------+---------------+--------------+--------+------+---------+
+# | F173  | Stern, Stan   | stan@bos.edu | 99000  | NULL | Staff   |
+# | F101  | Aloof, Alison | ali@bos.edu  | 30000  | NULL | Staff   |
+# | S1007 | Perfect, Peter| 1007@bos.edu | NULL   |  590 | Student | 
+# | S1008 | Dunce, Donald | 1008@bos.edu | NULL   |  220 | Student |
+# +-------+---------------+--------------+--------+------+---------+
+
 --       You can use UNION when you have two tables you want to combine but that contain different data. You will have to 
 --       make the two tables agree before you can do the UNION though, this is done by making the final table contain all 
 --       information from all tables with NULL entries in the rows that don't have the data required. 
@@ -211,25 +204,18 @@ FROM student
 -- # 12. Display rows as columns. In this example you are shown how to display your rows as columns, and below you are told 
 --       how to do the opposite by being able to display columns as rows. Table 1 displays the results as they are in the 
 --       database and table 2 displays the results as how they should look when rows have been swapped with columns.
-# Table 1 #
-# +--------------+----------+-------+
-# | student	     | course	  | grade |
-# +--------------+----------+-------+
-# | Gao Cong    	| Java	    | 80    |
-# | Gao Cong	    | Database	| 77    |
-# | Gao Cong	    | Algebra	 | 50    |
-# | Dongyan Zhou	| Java     |	62    |
-# | Dongyan Zhou | Database	| 95    |
-# | Dongyan Zhou	| Algebra	 | 62    |
+# Table 1 #                                     # Table 2 #
+# +--------------+----------+-------+           +--------------+------+----+---------+
+# | student      | course   | grade |           | name         | java | DB | Algebra |
+# +--------------+----------+-------+           +--------------+------+----+---------+
+# | Gao Cong     | Java     | 80    |           | Gao Cong     | 80   | 77 | 50      |
+# | Gao Cong     | Database | 77    |           | Dongyan Zhou | 62   | 95 | 62      |
+# | Gao Cong     | Algebra  | 50    |           +--------------+------+----+---------+
+# | Dongyan Zhou | Java     | 62    |
+# | Dongyan Zhou | Database | 95    | 
+# | Dongyan Zhou | Algebra  | 62    |
 # +--------------+----------+-------+
 
-# Table 2 #
-# +--------------+------+----+---------+
-# | name	        | java	| DB	| Algebra |
-# +--------------+------+----+---------+
-# | Gao Cong	    | 80	  | 77 |	50      |
-# | Dongyan Zhou	| 62	  | 95 |	62      |
-# +--------------+------+----+---------+
 --       To swap rows into columns you could use either a self join(in the example) or you can use CASE
 SELECT student, 
     max(CASE WHEN course='Java'         THEN grade ELSE NULL END) AS Java,
@@ -249,32 +235,15 @@ SELECT name as student, 'Algebra'  as course, Algebra  as grade FROM exam
 --       the database table so it can be freely edited and then the newly fresh one when finished can be used to replace 
 --       the out of date existing table. Table 1 and 2 show the two separate tables and table 3 displays the results that 
 --       should be inside the mimic in this example.
-# Table 1
-# +-----+--------------+
-# | id  |	parkingSpace |
-# +-----+--------------+
-# | E01	| F8           |
-# | E02	| G22          |
-# | E03	| F7           |
-# +-----+--------------+
+# Table 1                              # Table 2 #                             # Table 3 #
+# +-----+--------------+               +-----+---------+-------+               +-----+---------+-------+--------------+
+# | id  | parkingSpace |               | id  | name    | phone |               | id  | name    | phone | parkingSpace |
+# +-----+--------------+               +-----+---------+-------+               +-----+---------+-------+--------------+
+# | E01 | F8           |               | E01 | Harpo   | 2753  |               | E01 | Harpo   | 2753  | F8           |
+# | E02 | G22          |               | E02 | Zeppo   | 2754  |               | E02 | Zeppo   | 2754  | G22          | 
+# | E03 | F7           |               | E03 | Groucho | 2744  |               | E03 | Groucho | 2755  | F7           |
+# +-----+--------------+               +-----+---------+-------+               +-----+---------+-------+--------------+
 
-# Table 2 #
-# +-----+---------+-------+
-# | id  |	name	   | phone |
-# +-----+---------+-------+
-# | E01	| Harpo	  | 2753  |
-# | E02	| Zeppo	  | 2754  |
-# | E03	| Groucho	| 2755  |
-# +-----+---------+-------+
-
-# Table 3 #
-# +-----+---------+-------+--------------+
-# | id	 | name	   | phone	| parkingSpace |
-# +-----+---------+-------+--------------+
-# | E01	| Harpo   |	2753	 | F8           |
-# | E02	| Zeppo	  | 2754	 | G22          | 
-# | E03	| Groucho	| 2755	 | F7           |
-# +-----+---------+-------+--------------+
 --       To allow data to be imported into your system a mimic of your system can be made and then all that needs to be done is the rows 
 --       from the old copy have to be deleted and then the table can be refilled with the fresh imported copy. This method is not 
 --       completely ideal but is efficient as a temporary measure until an up to date version of the table is made.
@@ -308,31 +277,16 @@ FROM (
 -- # 16. Combine multiple queries. Both related and unrelated queries can be merged, if the queries are often used together then combining
 --       them together can greatly improve performance. Table 1 and 2 show the two separate tables and Table 3 shows the result you would 
 --       obtain from combining queries.
-# Table 1 #
-# +---------+---------------+
-# | content	| Page name     |
-# +---------+---------------+
-# | chello	 | index.html    |
-# | cHia	   | index.html    |
-# | cpage2	 | p2.html       |
-# | cIndex	 | contents.html |
+# Table 1 #                      # Table 2 #                            +------------+---------+-----------------------------------+------+    
+# +---------+---------------+    +----------------------------------+   | pagename   | content | NULL                              | page |
+# | content | Page name     |    | Message                          |   | index.html | hello   |                                   | page |
+# +---------+---------------+    +----------------------------------+   | index.html | Hia     |                                   | page |
+# | chello  | index.html    |    | The site will be down on Tuesday |   |            |         | The site will be down on Tuesday  | motd |
+# | cHia    | index.html    |    +----------------------------------+   +------------+---------+-----------------------------------+------+
+# | cpage2  | p2.html       |                                                  
+# | cIndex  | contents.html |
 # +---------+---------------+
 
-# Table 2 #
-# +----------------------------------+
-# | Message                          |
-# +----------------------------------+
-# | The site will be down on Tuesday |
-# +----------------------------------+
-
-# Table 3 #
-# +------------+---------+-----------------------------------+------+
-# | pagename	  | content	| NULL                             	| page |
-# +------------+---------+-----------------------------------+------+
-# | index.html	| hello		 |                                   | page |
-# | index.html	| Hia		   |                                   | page |
-# |            |         | The site will be down on Tuesday	 | motd |
-# +------------+---------+-----------------------------------+------+
 --       In this example a typical approach to these tables could be:
 -- SELECT pagename, content
 --  FROM page
@@ -358,24 +312,16 @@ SELECT age, 5*FLOOR(age/5) AS valueBucket,
 FROM population 
 
 -- # 18. Test subquery. Here you are shown how to test two values from your subquery to ensure that it has run correctly.
-# Table 1 #
-# +----------+--------+-------+
-# | Customer	| Item	  | Price |
-# +----------+--------+-------+
-# | Brian	   | Table	 | 100   |
-# | Robert	  | Chair	 | 20    |
-# | Robert	  | Carpet | 200   |
-# | Janette	 | Statue | 300   |
+# Table 1 #                          # Table 2 #
+# +----------+--------+-------+      +----------+--------+-------+
+# | Customer | Item   | Price |      | Customer | Item   | Price |
+# +----------+--------+-------+      +----------+--------+-------+
+# | Brian    | Table  | 100   |      | Brian    | Table  | 100   |
+# | Robert   | Chair  | 20    |      | Robert   | Carpet | 200   |
+# | Robert   | Carpet | 200   |      | Janette  | Statue | 300   |
+# | Janette  | Statue | 300   |      +----------+--------+-------+
 # +----------+--------+-------+
 
-# Table 2 #
-# +----------+--------+-------+
-# | Customer	| Item	  | Price |
-# +----------+--------+-------+
-# | Brian    |	Table	 | 100   |
-# | Robert	  | Carpet	| 200   |
-# | Janette	 | Statue	| 300   |
-# +----------+--------+-------+
 --       Suppose you have a table of customers and their orders, as shown in Table 1 and you want to produce a list of every customer and 
 --       their biggest order, as shown in Table 2. This is easy enough to do with:
 -- SELECT Customer, MAX(price)
@@ -387,3 +333,4 @@ FROM custItem x JOIN (
   FROM custItem
   GROUP BY Customer) y
   ON (x.Customer = y.Customer AND x.Price = y.Price)
+      
