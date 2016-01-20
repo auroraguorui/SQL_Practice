@@ -142,12 +142,12 @@ FROM t
 -- # 10. Values and Subtotals. Get values and Subtotals in one shot. In this example you are shown how to obtain subtotals in your 
 --       query, allowing you to easily see SUM results for different elements. Table 1 shows the result without the subtotals and 
 --       Table 2 shows the result with subtotals.
-# Table 1 #
-# +------+--------------+-------+
-# | item	| serialnumber	| price |
-# +------+--------------+-------+
-# | Awl	 | 1	           | 10    |
-# | Awl	 | 3	           | 10    |
+# Table 1 #                             # Table 2 #
+# +------+--------------+-------+       +------+--------------+-------+
+# | item | serialnumber | price |       | item | serialnumber | price |
+# +------+--------------+-------+       +------+--------------+-------+
+# | Awl	 | 1            | 10    |       | Awl	 | 1            | 10    |
+# | Awl	 | 3            | 10    |       | Awl	 | 3            | 10    |
 # | Bowl	| 2	           |	10    |
 # | Bowl	| 5	           |	10    |
 # | Bowl	| 6	           |	10    |
