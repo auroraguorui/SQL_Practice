@@ -118,12 +118,12 @@ FROM transact
 --      obtain with the LEFT JOIN
 # Table 1 #                          # Table 2 #
 # +---------+---------------+        +---------+---------------+
-# | name    | COUNT(custid) |        | name	   | COUNT(custid) |
+# | name    | COUNT(custid) |        | name    | COUNT(custid) |
 # +---------+---------------+        +---------+---------------+
-# | Betty   | 2             |        | Betty	  | 2             |
-# | Janette	| 1             |        | Janette	| 1             | 
-# +---------+---------------+        | Robert	 | 0             |
-                                     +---------+---------------+
+# | Betty   | 2             |        | Betty   | 2             |
+# | Janette | 1             |        | Janette | 1             |
+# +---------+---------------+        | Robert  | 0             |
+                                     +---------+---------------+ 
 
 --      The following query will only give two rows as the JOIN function automatically does not include rows with a count of 0.
 --      In order to obtain the rows where the count from the query is 0 a LEFT JOIN or a UNION can be used.
