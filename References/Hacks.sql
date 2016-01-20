@@ -62,29 +62,17 @@ FROM interest
 -- # 6. Running Total
 --      In this example you are shown how to get a running total in a set of results. Table 1 shows the results without the running total and 
 --      Table 2 shows what we get with the running total.
-# Table 1 #
-# +------------+---------------+--------+
-# | whn       	| description	  | amount |
-# +------------+---------------+--------+
-# | 2006-11-01	| Wages	        |  50    |
-# | 2006-11-02	| Company Store	| -10    |
-# | 2006-11-03 |	Company Store	| -10    |
-# | 2006-11-04	| Company Store	| -10    |
-# | 2006-11-05	| Company Store	| -10    |
-# | 2006-11-06	| Company Store	| -10    |
-# +------------+---------------+--------+
-
-# Table 2 #
-# +------------+---------------+--------+---------+
-# | whn	       | description	  | amount	| balance |
-# +------------+---------------+--------+---------+
-# | 2006-11-01	| Wages	        |  50    |	50      |
-# | 2006-11-02	| Company Store	| -10    |	40      |
-# | 2006-11-03	| Company Store	| -10	   | 30      |
-# | 2006-11-04	| Company Store	| -10	   | 20      |
-# | 2006-11-05	| Company Store	| -10	   | 10      |
-# | 2006-11-06	| Company Store	| -10	   |  0      |
-# +------------+---------------+--------+---------+
+# Table 1 #                                    # Table 2 #
+# +------------+---------------+--------+      +------------+---------------+--------+---------+
+# | whn       	| description	  | amount |      | whn	       | description	  | amount	| balance |
+# +------------+---------------+--------+      +------------+---------------+--------+---------+
+# | 2006-11-01	| Wages	        |  50    |      | 2006-11-01	| Wages	        |  50    |	50      |
+# | 2006-11-02	| Company Store	| -10    |      | 2006-11-02	| Company Store	| -10    |	40      |
+# | 2006-11-03 |	Company Store	| -10    |      | 2006-11-03	| Company Store	| -10	   | 30      |
+# | 2006-11-04	| Company Store	| -10    |      | 2006-11-04	| Company Store	| -10	   | 20      |
+# | 2006-11-05	| Company Store	| -10    |      | 2006-11-05	| Company Store	| -10	   | 10      |
+# | 2006-11-06	| Company Store	| -10    |      | 2006-11-06	| Company Store	| -10	   |  0      |
+# +------------+---------------+--------+      ------------+---------------+--------+---------+
 
 --      To calculate a running total a table needs to be joined to itself, each version can be called table x and table y.
 SELECT x.whn, x.description, x.amount, SUM(y.amount) AS balance
@@ -110,29 +98,18 @@ FROM transact;
 -- # 7. Credit debit. In this example you are shown how to split a single column into two separate columns and also below you are
 --      told how to combine two tables into a single table. Here we are splitting cash amounts into credit and debit.
 --      Table 1 shows the results without the split column and Table 2 shows what we get when the column is split into two.
-# Table 1 #
-# +------------+---------------+--------+
-# | whn       	| description	  | amount |
-# +------------+---------------+--------+
-# | 2006-11-01	| Wages	        |  50    |
-# | 2006-11-02	| Company Store	| -10    |
-# | 2006-11-03 |	Company Store	| -10    |
-# | 2006-11-04	| Company Store	| -10    |
-# | 2006-11-05	| Company Store	| -10    |
-# | 2006-11-06	| Company Store	| -10    |
-# +------------+---------------+--------+
+# Table 1 #                                           # Table 2 #
+# +------------+---------------+--------+             +------------+---------------+--------+---------+
+# | whn       	| description	  | amount |             | whn	       | description	  | cshIN 	| cshOUT  |
+# +------------+---------------+--------+             +------------+---------------+--------+---------+
+# | 2006-11-01	| Wages	        |  50    |             | 2006-11-01	| Wages	        |  50    |	        |
+# | 2006-11-02	| Company Store	| -10    |             | 2006-11-02	| Company Store	|        |	10      |
+# | 2006-11-03 |	Company Store	| -10    |             | 2006-11-03	| Company Store	|    	   | 10      |
+# | 2006-11-04	| Company Store	| -10    |             | 2006-11-04	| Company Store	|    	   | 10      |
+# | 2006-11-05	| Company Store	| -10    |             | 2006-11-05	| Company Store	|    	   | 10      |
+# | 2006-11-06	| Company Store	| -10    |             | 2006-11-06	| Company Store	|    	   | 10      |
+# +------------+---------------+--------+             +------------+---------------+--------+---------+
 
-# Table 2 #
-# +------------+---------------+--------+---------+
-# | whn	       | description	  | cshIN 	| cshOUT  |
-# +------------+---------------+--------+---------+
-# | 2006-11-01	| Wages	        |  50    |	        |
-# | 2006-11-02	| Company Store	|        |	10      |
-# | 2006-11-03	| Company Store	|    	   | 10      |
-# | 2006-11-04	| Company Store	|    	   | 10      |
-# | 2006-11-05	| Company Store	|    	   | 10      |
-# | 2006-11-06	| Company Store	|    	   | 10      |
-# +------------+---------------+--------+---------+
 --      To split a column into two you have to use a CASE function as shown in the example. The SUBSTRING used in the example is 
 --      used to get rid of the negative sign infront of the number so that there are only positive numbers in the table.
 --      To combine two columns into a single one you also use a CASE function to do this with this example you can use this code:
@@ -145,22 +122,14 @@ FROM transact
 --      not perform the join when one of the values is 0. This is done by adding a either a LEFT JOIN or a UNION making the join 
 --      also to reveal the rows with a count of 0. Table 1 shows the results without a LEFT JOIN and table 2 shows the results we 
 --      obtain with the LEFT JOIN
-# Table 1 #
-# +---------+---------------+
-# | name	   | COUNT(custid) |
-# +---------+---------------+
-# | Betty  	| 2             |
-# | Janette	| 1             |
-# +---------+---------------+
-
-# Table 2 #
-# +---------+---------------+
-# | name	   | COUNT(custid) |
-# +---------+---------------+
-# | Betty	  | 2             |
-# | Janette	| 1             |
-# | Robert	 | 0             |
-# +---------+---------------+
+# Table 1 #                          # Table 2 #
+# +---------+---------------+        +---------+---------------+
+# | name	   | COUNT(custid) |        | name	   | COUNT(custid) |
+# +---------+---------------+        +---------+---------------+
+# | Betty  	| 2             |        | Betty	  | 2             |
+# | Janette	| 1             |        | Janette	| 1             | 
+# +---------+---------------+        | Robert	 | 0             |
+                                     +---------+---------------+
 
 --      The following query will only give two rows as the JOIN function automatically does not include rows with a count of 0.
 --      In order to obtain the rows where the count from the query is 0 a LEFT JOIN or a UNION can be used.
