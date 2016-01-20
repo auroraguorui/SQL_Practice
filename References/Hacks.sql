@@ -64,14 +64,14 @@ FROM interest
 --      Table 2 shows what we get with the running total.
 # Table 1 #                                    # Table 2 #
 # +------------+---------------+--------+      +------------+---------------+--------+---------+
-# | whn       	| description	  | amount |      | whn	       | description	  | amount	| balance |
+# | whn        | description	  | amount |      | whn	       | description	  | amount	| balance |
 # +------------+---------------+--------+      +------------+---------------+--------+---------+
-# | 2006-11-01	| Wages	        |  50    |      | 2006-11-01	| Wages	        |  50    |	50      |
-# | 2006-11-02	| Company Store	| -10    |      | 2006-11-02	| Company Store	| -10    |	40      |
+# | 2006-11-01 | Wages	        |  50    |      | 2006-11-01	| Wages	        |  50    |	50      |
+# | 2006-11-02 | Company Store	| -10    |      | 2006-11-02	| Company Store	| -10    |	40      |
 # | 2006-11-03 |	Company Store	| -10    |      | 2006-11-03	| Company Store	| -10	   | 30      |
-# | 2006-11-04	| Company Store	| -10    |      | 2006-11-04	| Company Store	| -10	   | 20      |
-# | 2006-11-05	| Company Store	| -10    |      | 2006-11-05	| Company Store	| -10	   | 10      |
-# | 2006-11-06	| Company Store	| -10    |      | 2006-11-06	| Company Store	| -10	   |  0      |
+# | 2006-11-04 | Company Store	| -10    |      | 2006-11-04	| Company Store	| -10	   | 20      |
+# | 2006-11-05 | Company Store	| -10    |      | 2006-11-05	| Company Store	| -10	   | 10      |
+# | 2006-11-06 | Company Store	| -10    |      | 2006-11-06	| Company Store	| -10	   |  0      |
 # +------------+---------------+--------+      ------------+---------------+--------+---------+
 
 --      To calculate a running total a table needs to be joined to itself, each version can be called table x and table y.
