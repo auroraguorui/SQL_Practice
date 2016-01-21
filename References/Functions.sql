@@ -1,4 +1,5 @@
 -- # http://sqlzoo.net/wiki/Functions_Reference 
+-- # http://a4academics.com/interview-questions/53-database-and-sql/397-top-100-database-sql-interview-questions-and-answers-examples-queries
 
 -- # 1. Concatenate strings.
 --      Concatenation means "stick strings together". In this example we concatenate three strings, name and region are string 
