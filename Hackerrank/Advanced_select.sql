@@ -78,5 +78,34 @@ SELECT CASE
 FROM triangles;
 
 # TABLE: CITY #
-# | Field | Type |
+# +-------------+--------------+
+# | Field       | Type         |
+# +-------------+--------------+
+# | ID          | NUMBER       |
+# | NAME        | VARCHAR2(21) | 
+# | COUNTRYCODE | VARCHAR2(3)  |
+# | DISTRICT    | VARCHAR2(20) | 
+# | POPULATION  | NUMBER       |
+# +-------------+--------------+
 -- # 6. Query the average population for all cities in CITY, rounded down to the nearest integer.
+SELECT FLOOR(AVG(POPULATION)) 
+FROM CITY;
+
+-- # 7. Query the difference between the maximum and minimum populations in CITY.
+SELECT MAX(POPULATION) - MIN(POPULATION) FROM CITY;
+
+-- # 8. Query the sum of LAT_N, followed by the sum of LONG_W, from STATION. The two results should be separated by a space and rounded 
+--      to 2 decimal places.
+SELECT ROUND(SUM(LAT_N),2), '', ROUND(SUM(LONG_W),2) FROM STATION;
+
+-- # 9. Consider P1(a,b) and P2(c,d) to be two points on a 2D plane where (a,b) are the respective minimum and maximum values of Northern 
+--      Latitude (LAT_N) and (c,d) are the respective minimum and maximum values of Western Longitude (LONG_W) in STATION.
+--      Query the Euclidean Distance between points P1 and P2 and format your answer to display 4 decimal digits.
+SELECT round(SQRT(POWER(MAX(LAT_N)-MAX(LONG_W),2) + POWER(MIN(LAT_N)-MIN(LONG_W),2)),4) FROM STATION;
+
+-- # 10. A median is defined as a number separating the higher half of a data set from the lower half. Query the median of the Northern 
+--       Latitudes (LAT_N) from STATION and round your answer to 
+SELECT round( x.LAT_N, 4 ) from STATION x, STATION y
+GROUP BY x.LAT_N 
+HAVING SUM( SIGN( 1-SIGN( y.LAT_N -x.LAT_N ) ) )/COUNT(*) > .5
+LIMIT 1
