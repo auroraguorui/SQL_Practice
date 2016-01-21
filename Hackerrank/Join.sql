@@ -60,6 +60,11 @@ SELECT x, y FROM functions f1 WHERE x=y AND
     ((SELECT count(*) FROM functions WHERE x=f1.x AND y=f1.x)>1)    
         ORDER BY x;
 
+SELECT distinct f1.x,f1.y FROM functions f1
+JOIN functions f2 ON f1.x = f2.y  
+WHERE f1.y = f2.x AND f1.x <= f2.x  AND 
+(SELECT count(*) FROM functions WHERE (x=f1.x OR x=f2.x) AND (y=f1.y OR y=f2.y)) > 1
+ORDER BY f1.x ASC;
 ---------------------------------------------------------------------------------------------------------------------------------------------------
 # TABLE: Projects #
 # +---------+------------+------------+
