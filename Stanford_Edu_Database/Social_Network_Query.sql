@@ -79,6 +79,17 @@ order by 2,1
 
 /* Q7 For each student A who likes a student B where the two are not friends, find if they have a friend C in common (who can introduce them!). For all such trios, return the name and grade of A, B, and C. 
 */
+select distinct h1.name, h1.grade, h2.name, h2.grade, h3.name, h3.grade
+from likes l 
+left join friend f on f.id1 = l.id1 and f.id2 = l.id2
+join friend f1 on l.id1 = f1.id1
+join friend f2 on f2.id1 = f1.id2 
+join highschooler h1 on h1.id = l.id1
+join highschooler h2 on h2.id = l.id2 
+join highschooler h3 on h3.id = f1.id2
+where f.id2 IS NULL and f2.id2 = l.id2
+
+
 select distinct h1.name, h1.grade, h2.name, h2.grade, h3.name, h3.grade from
 likes l left join friend f on 
 f.Id1 = l.Id1 and f.id2= l.id2 
