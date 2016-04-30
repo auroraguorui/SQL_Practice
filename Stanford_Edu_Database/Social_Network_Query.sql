@@ -67,6 +67,16 @@ join highschooler h1 on l.ID1 = h1.ID
 where h2.grade <> h1.grade)
 order by 2,1
 
+
+select distinct h1.name, h1.grade 
+from highschooler h1
+join friend f on f.id1 = h1.id
+join highschooler h2 on f.id2 = h2.id
+group by f.id1
+having max(h2.grade) = min(h2.grade) and max(h2.grade) = h1.grade
+order by 2,1
+
+
 /* Q7 For each student A who likes a student B where the two are not friends, find if they have a friend C in common (who can introduce them!). For all such trios, return the name and grade of A, B, and C. 
 */
 select distinct h1.name, h1.grade, h2.name, h2.grade, h3.name, h3.grade from
@@ -104,6 +114,13 @@ join highschooler h3 on h3.id = l2.id2
 
 /* Q11 Find those students for whom all of their friends are in different grades from themselves. Return the students' names and grades. 
 */
+select h.name, h.grade
+from highschooler h
+join friend f on f.id1 = h.id
+join highschooler h2 on h2.id = f.id2
+group by id1
+having min(abs(h.grade - h2.grade))>0
+
 select distinct name, grade from highschooler
 where id not in
 ( select f.id1 from friend f 
