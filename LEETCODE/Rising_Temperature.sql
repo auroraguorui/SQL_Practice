@@ -18,6 +18,20 @@
 # +----+
 #
 
+
+# Write your MySQL query statement below
+SELECT temp.Id
+FROM (
+  SELECT Id, CASE
+      WHEN @prev < temperature AND DATEDIFF(Date, @date_prev) = 1 THEN 1 ELSE 0 END as booleen,
+      @prev:= Temperature,
+      @date_prev:=Date
+  FROM Weather w, (SELECT @prev:=NULL, @date_prev:=NULL) vars
+  ORDER BY Date
+  ) temp 
+WHERE temp.booleen = 1 
+
+
 # Time:  O(n^2)
 # Space: O(n)
 # Write your MySQL query statement below
