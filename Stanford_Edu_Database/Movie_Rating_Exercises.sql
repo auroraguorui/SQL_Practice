@@ -151,6 +151,7 @@ WHERE ra.stars in
   (
    SELECT min(rr.stars) FROM rating rr 
   )
+/* note there might be multiple reviewers with the lowest rating
 
 /* Q16 List movie titles and average ratings, from highest-rated to lowest-rated. If two or more movies have the 
 same average rating, list them in alphabetical order. */
