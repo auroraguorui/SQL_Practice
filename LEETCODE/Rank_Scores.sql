@@ -27,7 +27,20 @@
 #    +-------+------+
 #
 
+
 # Write your MySQL query statement below
+SELECT
+  Score,
+  @rank := @rank + (@prev <> (@prev := Score)) Rank
+FROM
+  Scores,
+  (SELECT @rank := 0, @prev := -1) init
+ORDER BY Score desc
+
+SELECT Score,
+       Rank() Over (order by Score desc) as rank
+FROM Scores
+
 SELECT Ranks.Score, Ranks.Rank FROM Scores LEFT JOIN 
        ( SELECT r.Score, @curRow := @curRow + 1  Rank 
             FROM (SELECT DISTINCT(Score), (SELECT @curRow := 0) 
