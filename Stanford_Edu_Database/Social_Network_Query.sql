@@ -158,6 +158,16 @@ where grade = 12;
 
 /* Q16 If two students A and B are friends, and A likes B but not vice-versa, remove the Likes tuple. 
 */
+delete from likes
+where
+id1 in (
+  select l1.id1 
+  from friend f
+  join likes l1 on l1.id1 = f.id1 and l1.id2 = f.id2
+  left join likes l2 on l1.id2 = l2.id1 and l1.id1 = l2.id2
+  where l2.id1 IS NULL
+  )
+  
 DELETE FROM Likes
 WHERE ID1 IN (SELECT L.ID1
                        FROM Friend F,Likes L
