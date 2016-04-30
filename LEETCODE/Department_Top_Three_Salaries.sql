@@ -34,8 +34,12 @@
 # +------------+----------+--------+
 
 # Write your MySQL query statement below
-SELECT D.Name AS Department, E.Name AS Employee, E.Salary AS Salary 
-FROM Employee E INNER JOIN Department D ON E.DepartmentId = D.Id 
-WHERE (SELECT COUNT(DISTINCT(Salary)) FROM Employee 
-       WHERE DepartmentId = E.DepartmentId AND Salary > E.Salary) < 3
-ORDER by E.DepartmentId, E.Salary DESC;
+SELECT d.name, e.name, e.salary
+FROM Department d
+JOIN Employee e
+ON e.DepartmentId = d.id
+WHERE 3 > (
+    SELECT COUNT(DISTINCT e1.Salary)
+    FROM Employee e1
+    WHERE e1.Salary > e.Salary AND e1.DepartmentId = e.DepartmentId
+    )
