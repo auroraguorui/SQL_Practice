@@ -110,6 +110,12 @@ WHERE goal.teamid = 'GER'
 GROUP BY game.id;
 
 -- # 13. List every match with the goals scored by each team as shown.
+select mdate, team1, sum(if(teamid = team1, 1,0)) as score1, team2, sum(if(teamid = team2,1,0)) as score2
+from game
+left join goal on id = matchid 
+group by id
+order by mdate, matchid, team1, team2
+
 SELECT game.mdate, 
        game.team1, 
        SUM(CASE WHEN goal.teamid = game.team1
