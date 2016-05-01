@@ -63,6 +63,14 @@ WHERE x.area = (
   WHERE x.continent = y.continent)
 
 -- # 7. Find each country that belongs to a continent where all populations are less than 25000000. Show name, continent and population.
+SELECT name, continent, population 
+FROM world
+WHERE continent in (
+  SELECT continent 
+  FROM world
+  GROUP BY continent
+  HAVING max(population) <= 25000000)
+  
 SELECT x.name, x.continent, x.population
 FROM world AS x
 WHERE 25000000 > ALL (
