@@ -5,3 +5,5 @@ select d.name, count(t.name)
 from dept d
 left join teacher t on t.dept = d.id
 group by d.id
+/* Note: null is not accunted for count()
+*/
