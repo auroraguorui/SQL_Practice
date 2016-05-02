@@ -93,6 +93,21 @@ ORDER BY f1.x ASC;
 --      of the tasks are consecutive, then they are the same project. Samantha is interested in finding the total number of different projects 
 --      completed. Output the start and end dates of projects listed by the number of days it took to complete the project in ascending order
 --      If there is more than one project that have the same number of completion days, then order by the start date of the project.
+SET @start:=NULL ;
+SET @prev:='' ;
+select temp.startday, max(temp.end_date)
+from (
+  select 
+  @start:= IF(@prev = start_date, @start, start_date) startday,
+  @prev:= end_date,
+  end_date
+  from (select * from Projects order by start_date) p
+  ) temp
+group by temp.startday
+order by to_days(max(temp.end_date))-to_days(temp.startday), temp.startday
+
+
+
 SET @prev:='';  -- note this should be character instead of integer
 SET @start:=NULL; 
 SET @count:=0;
