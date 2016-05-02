@@ -78,8 +78,11 @@ WHERE s1.name = 'Craiglockhart'
 AND s2.name = 'Tollcross';
 
 -- # 9. Give a list of the stops which may be reached from 'Craiglockhart' by taking one bus. Include the details of the appropriate service.
-SELECT r1.company, r1.num, s1.name, s2.name
-FROM route AS r1
+select stops.name, route.company, route.num
+from stops 
+join route on stops.id = route.stop
+join route b on route.company = b.company and route.num = b.num
+where route.company = 'LRT' and b.stop = 53
 
 -- # 10. Find the routes involving two buses that can go from Craiglockhart to Sighthill. Show the bus no. and company for 
 --       the first bus, the name of the stop for the transfer, and the bus no. and company for the second bus.
