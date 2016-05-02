@@ -46,6 +46,17 @@ ORDER BY p2.Salary;
 # +----+----+
 -- # 3. Functions contains X and Y. Y is the value of some function F at X, i.e. Y = F(X). Two pairs (X1, Y1) and (X2, Y2) are symmetric 
 --      pairs if X1 = Y2 and X2 = Y1. Write a query to output all such symmetric pairs in ascending order by the value of X.
+select distinct f1.x, f1.y
+from Functions f1
+join Functions f2
+on f1.y = f2.x and f1.x = f2.y and f1.x < f1.y
+union 
+select distinct f.x, f.y
+from Functions f
+group by f.x, f.y
+having count(*) > 1
+order by 1,2;
+
 SELECT CASE WHEN x <= y THEN x ELSE y END AS n1, 
        CASE WHEN x <= y THEN y ELSE x END AS n2 
 FROM Functions 
