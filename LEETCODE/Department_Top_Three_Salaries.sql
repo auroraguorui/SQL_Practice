@@ -43,3 +43,16 @@ WHERE 3 > (
     FROM Employee e1
     WHERE e1.Salary > e.Salary AND e1.DepartmentId = e.DepartmentId
     )
+
+
+SELECT d.NAME AS Department, t.NAME AS Employee, Salary FROM (
+  SELECT    DepartmentId,
+            NAME,
+            Salary, 
+            @rank := IF(@prevDeptId != DepartmentId, 1, IF(@prevSalary = Salary, @rank, @rank + 1) ) AS Rank,
+            @prevDeptId := DepartmentId AS prevDeptId,
+            @prevSalary := Salary AS prevSalary
+  FROM      Employee e, (SELECT @rank := 0, @prevDeptId := NULL, @prevSalary := NULL) r
+  ORDER BY  DepartmentId ASC, Salary DESC
+) t INNER JOIN Department d ON t.DepartmentId = d.ID
+WHERE t.rank <= 3;
