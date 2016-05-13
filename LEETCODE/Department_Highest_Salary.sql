@@ -28,6 +28,17 @@
 # | Sales      | Henry    | 80000  |
 # +------------+----------+--------+
 # 
+select
+d.Name, e.Name, e.Salary
+from
+Department d,
+Employee e,
+(select MAX(Salary) as Salary,  DepartmentId as DepartmentId from Employee GROUP BY DepartmentId) h
+where
+e.Salary = h.Salary and
+e.DepartmentId = h.DepartmentId and
+e.DepartmentId = d.Id;
+
 # Write your MySQL query statement below
 SELECT d.Department AS Department, e.Name AS Employee, d.Salary AS Salary
 FROM (SELECT Department.Id AS DepartmentId, Department.Name AS Department, emp.Salary AS Salary
