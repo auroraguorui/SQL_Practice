@@ -26,9 +26,17 @@
 #    | 3.50  | 4    |
 #    +-------+------+
 #
+# --------------------------------------------------------------------------------
+SELECT tmp.Score, tmp.Rank
+FROM (
+  SELECT SCORE, 
+         @COUNT:= IF(@PREV > Score, @COUNT + 1, @COUNT) as Rank,
+         @PREV:= Score
+  FROM Scores, (SELECT @PREV:=NULL, @COUNT:=1) as vars
+  ORDER BY Score desc ) tmp
 
-
-# Write your MySQL query statement below
+# --------------------------------------------------------------------------------
+# 800 ms Write your MySQL query statement below
 SELECT
   Score,
   @rank := @rank + (@prev <> (@prev := Score)) Rank
@@ -37,22 +45,36 @@ FROM
   (SELECT @rank := 0, @prev := -1) init
 ORDER BY Score desc
 
+# 801 ms --------------------------------------------------------------------------------
+SELECT Score, (
+  SELECT count(*) 
+  FROM (
+    SELECT distinct Score s 
+    FROM Scores) tmp 
+  WHERE s >= Score) Rank
+FROM Scores
+ORDER BY Score desc
+
+# --------------------------------------------------------------------------------
+# Time:  O(n^3)
+# Space: O(n)
+SELECT Score, (
+  SELECT COUNT(DISTINCT(Score)) 
+  FROM  Scores b 
+  WHERE b.Score > a.Score) + 1 AS Rank
+FROM Scores a
+ORDER by Score DESC
+
+# --------------------------------------------------------------------------------
 SELECT Score,
        Rank() Over (order by Score desc) as rank
 FROM Scores
 
+# --------------------------------------------------------------------------------
 SELECT Ranks.Score, Ranks.Rank FROM Scores LEFT JOIN 
        ( SELECT r.Score, @curRow := @curRow + 1  Rank 
             FROM (SELECT DISTINCT(Score), (SELECT @curRow := 0) 
                       FROM Scores ORDER by Score DESC) r
        ) Ranks 
        ON Scores.Score = Ranks.Score
-       ORDER by Score DESC
-
-
-# Time:  O(n^3)
-# Space: O(n)
-# Write your MySQL query statement below
- SELECT Score,  (SELECT COUNT(DISTINCT(Score)) FROM  Scores b WHERE b.Score > a.Score) + 1 AS Rank
-       FROM Scores a
        ORDER by Score DESC
