@@ -14,5 +14,8 @@
 # Write your MySQL query statement below
 SELECT MAX(Salary) 
 FROM Employee
-WHERE Salary NOT IN (
+WHERE Salary < (  
   SELECT MAX(Salary) FROM Employee)
+
+
+!!!!!!! < is better than not in  
