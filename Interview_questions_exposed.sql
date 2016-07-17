@@ -161,7 +161,7 @@ SET hivevar:n_docs=10000000;
 SELECT tf.pageid, tf.word,
        (1 + LOG(CAST(tf.freq AS FLOAT)) ) * LOG(CAST({n_docs} AS FLOAT) / df.ndoc) as TFIDF
 FROM tf
-JOIN df ON tf.word = df.word AND df.ndoct > 1
+JOIN df ON tf.word = df.word AND df.ndoc > 1
 ORDER BY tfidf DESC;
 
 -- # 8. A PostgreSQL database. Given schema Sales, which is a table with product and sales infomration. Write SQL queries to find out top
